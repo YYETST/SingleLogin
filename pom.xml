@@ -65,6 +65,11 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.yonyou.yht</groupId>
+            <artifactId>yht-sdk</artifactId>
+            <version>5.0.9-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

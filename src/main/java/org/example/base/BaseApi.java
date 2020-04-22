@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Map;
 
 /**
@@ -20,9 +22,17 @@ import java.util.Map;
 @Component
 public class BaseApi {
 
-    //正式环境地址
-    @Value("${login.prop}")
-    private String propUrl;
+
+    @Value("${sysid}")
+    protected String sysId;
+    @Value("${client_id}")
+    protected String clientId;
+    //正式环境友互通地址
+    @Value("${login.yht}")
+    protected String loginYht;
+    //YS访问地址
+    @Value("${login.yonsuite}")
+    protected String loginYS;
 
 
     private static final Logger logger = LoggerFactory.getLogger(BaseApi.class);
@@ -31,7 +41,7 @@ public class BaseApi {
     //设置默认的每页显示数量
     public static final String pageSize = "100";
 
-    private static ObjectMapper mapper = new ObjectMapper();
+    protected static ObjectMapper mapper = new ObjectMapper();
 
     private static Gson gson = new Gson();
 
@@ -72,13 +82,12 @@ public class BaseApi {
         return data;
     }
 
-    protected  String getUrl(String... requestUri) throws Exception {
-        StringBuffer str = new StringBuffer();
-        str.append(propUrl);
-        for(String content : requestUri){
-            str.append(content);
-        }
-        return str.toString();
+
+    /**
+     * 获取拼接的YS单点登录地址
+     */
+    public String getLoginUrl(String tempToken) throws UnsupportedEncodingException {
+        return loginYht+"?sysid="+sysId+"&service="+ URLEncoder.encode(loginYS,"UTF-8") +"&token="+tempToken;
     }
 
 
